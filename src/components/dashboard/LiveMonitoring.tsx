@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Activity, Cpu, Eye, Users, AlertTriangle, CheckCircle, Clock, Camera } from 'lucide-react';
 import { useAppStore } from '../../store';
-import { useDetection } from '../../api/hooks';
+// import { useDetection } from '../../api/hooks';
 import { useWebRTCStream } from '../../hooks/useWebRTCStream';
 import { useDetectionSocket, type DetectionBox } from '../../hooks/useDetectionSocket';
 import { resolveCameraPath } from '../../utils/cameraPaths';
@@ -183,7 +183,7 @@ export default function LiveMonitoring() {
         if (cancelled) return;
 
         // Normalize known data
-        const known = (Array.isArray(knownRaw) ? knownRaw : knownRaw?.data || []).map((item: any) => {
+        const known = knownRaw.map((item: any) => {
           const capturedAt = item.captured_at ?? item.capturedAt ?? item.time;
           const mealType = item.meal_type || item.mealType || deriveMealType(capturedAt);
           
@@ -205,7 +205,7 @@ export default function LiveMonitoring() {
         });
 
         // Normalize unknown data
-        const unknown = (Array.isArray(unknownRaw) ? unknownRaw : unknownRaw?.data || []).map((item: any) => {
+        const unknown = unknownRaw.map((item: any) => {
           const capturedAt = item.captured_at ?? item.capturedAt ?? item.time;
           const mealType = item.meal_type || item.mealType || deriveMealType(capturedAt);
           

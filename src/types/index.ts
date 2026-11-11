@@ -81,6 +81,7 @@ export interface AppState {
   selectedState: State | null;
   selectedBranch: Branch | null;
   selectedHall: Hall | null;
+  refreshKey: number;
   sidebarOpen: boolean;
   activeSection: string;
   notifications: Notification[];
@@ -94,6 +95,7 @@ export interface AppState {
   setSelectedState: (s: State | null) => void;
   setSelectedBranch: (b: Branch | null) => void;
   setSelectedHall: (h: Hall | null) => void;
+  clearLocation: () => void;
   setSidebarOpen: (v: boolean) => void;
   setActiveSection: (s: string) => void;
   markNotificationRead: (id: string) => void;

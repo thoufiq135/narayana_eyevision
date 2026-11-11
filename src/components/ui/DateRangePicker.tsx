@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, ChevronLeft, ChevronRight, ChevronDown, X } from 'lucide-react';
 import { DateRange, DateRangePreset } from '../../types';
 import { today, daysAgo } from '../../api/hooks';

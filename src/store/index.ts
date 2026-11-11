@@ -15,6 +15,9 @@ export const useAppStore = create<AppState>((set) => ({
   detectedPersons: mockDetectedPersons,
   reports: mockReports,
 
+   // Refresh tracking
+  refreshKey: 0,
+
   // Date defaults: today for single date, last 7 days for range
   selectedDate: today(),
   dateRange: {
@@ -26,6 +29,7 @@ export const useAppStore = create<AppState>((set) => ({
   setSelectedState: (s: State | null) => set({ selectedState: s, selectedBranch: null, selectedHall: null }),
   setSelectedBranch: (b: Branch | null) => set({ selectedBranch: b, selectedHall: null }),
   setSelectedHall: (h: Hall | null) => set({ selectedHall: h }),
+  clearLocation: () => set({ selectedState: null, selectedBranch: null, selectedHall: null }),
   setSidebarOpen: (v: boolean) => set({ sidebarOpen: v }),
   setActiveSection: (s: string) => set({ activeSection: s }),
   markNotificationRead: (id: string) =>

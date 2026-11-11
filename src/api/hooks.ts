@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useAppStore } from '../store';
-import { fetchKnownData, fetchUnknownData, normalizeListResponse } from './dashboardApi';
+import { fetchKnownData, fetchUnknownData } from './dashboardApi';
+import { ENDPOINTS } from './config';
+import type { StudentAttendanceRecord } from '../types';
 
 // ── Date helpers ──────────────────────────────────────────
 // Several components import these directly from hooks.ts.
@@ -13,31 +14,10 @@ export function daysAgo(n: number): string {
 }
 
 type HookState<T> = {
-  data: T | null;
+  data: T;
   loading: boolean;
   error: string | null;
 };
-
-// ── Raw API envelope shape (/getData/known-data, /getData/unknown-data) ──
-type ApiPagination = { currentPage: number; totalPages: number; totalRecords: number; recordsPerPage: number };
-type ApiResponseType<T> = { success: boolean; data: T[]; pagination: ApiPagination };
-
-// Pulls every page instead of just page 1. Works whether the underlying fetch
-// function returns a raw array or the paginated { data, pagination } envelope.
-async function fetchAllPages<T>(
-  fetchFn: (date: string, hallId: string, page?: number, limit?: number) => Promise<T[]>,
-  date: string,
-  hallId: string,
-  limit = 50
-): Promise<T[]> {
-  try {
-    const result = await fetchFn(date, hallId);
-    return result || [];
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    return [];
-  }
-}
 
 function buildDateRange(from: string, to: string): string[] {
   if (!from || !to) return [];
@@ -178,6 +158,60 @@ export function useUnknownData(date: string, hallId: string): HookState<any[]> {
       active = false;
     };
   }, [date, hallId]);
+
+  return state;
+}
+
+export function useStudentAttendance(
+  hallId: string,
+  studentId: string,
+  date: string
+): HookState<StudentAttendanceRecord | null> {
+  const [state, setState] = useState<HookState<StudentAttendanceRecord | null>>({
+    data: null,
+    loading: !!hallId && !!studentId && !!date,
+    error: null,
+  });
+
+  useEffect(() => {
+    if (!hallId || !studentId || !date) {
+      setState({ data: null, loading: false, error: null });
+      return;
+    }
+
+    let active = true;
+
+    const load = async () => {
+      setState({ data: null, loading: true, error: null });
+      try {
+        const response = await fetch(
+          ENDPOINTS.ATTENDANCE.STUDENT_DETAIL(hallId, studentId, date),
+          { headers: { 'Content-Type': 'application/json' } }
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const payload = await response.json();
+        if (active) {
+          setState({ data: payload.data ?? payload, loading: false, error: null });
+        }
+      } catch (error) {
+        if (!active) return;
+        console.error('Error fetching student attendance:', error);
+        setState({
+          data: null,
+          loading: false,
+          error: error instanceof Error ? error.message : 'Failed to load student attendance',
+        });
+      }
+    };
+
+    load();
+    return () => {
+      active = false;
+    };
+  }, [hallId, studentId, date]);
 
   return state;
 }

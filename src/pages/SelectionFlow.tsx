@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { 
-  MapPin, Building2, Utensils, ChevronRight, Eye, ArrowLeft, 
-  CheckCircle, Search, ChevronDown, Home, Loader2, 
-  Sparkles, GraduationCap, Users, Camera, Wifi, WifiOff,
-  Award, Star, TrendingUp, X
+  MapPin, Building2, Utensils, ChevronRight, Eye, ArrowLeft,
+  CheckCircle, Search, Home, Sparkles, X
 } from 'lucide-react';
 import { useAppStore } from '../store';
 import { statesData } from '../data/mock';
@@ -115,7 +113,6 @@ function themeForKey(key: string) {
 
 export default function SelectionFlow() {
   const navigate = useNavigate();
-  const location = useLocation();
   const params = useParams<{ stateId?: string; branchId?: string; hallId?: string }>();
   
   const { 
@@ -250,7 +247,7 @@ export default function SelectionFlow() {
 
   const filteredStates = statesData.filter(s =>
     s.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    s.code.toLowerCase().includes(searchTerm.toLowerCase())
+    s.id.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const filteredBranches = state?.branches.filter(b =>
@@ -746,7 +743,7 @@ function StateLandmarkCard({
               {stateItem.name}
             </p>
             <p className="text-[11px] tracking-wider uppercase text-brand-textSecondary/60 font-medium mt-0.5">
-              {stateItem.code}
+              {stateItem.id}
             </p>
           </div>
           <ChevronRight

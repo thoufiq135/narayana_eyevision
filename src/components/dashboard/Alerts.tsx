@@ -1,16 +1,15 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { AlertTriangle, WifiOff, Cpu, FileText, CheckCircle, Bell, Check } from 'lucide-react';
+import { AlertTriangle, WifiOff, FileText, CheckCircle, Bell, Check } from 'lucide-react';
 import { useAppStore } from '../../store';
 import { useNotifications, markNotificationReadApi } from '../../api/hooks';
-import { Notification } from '../../types';
+import type { Notification } from '../../api/hooks';
 import { SkeletonCard } from '../ui/Skeleton';
 
 const typeConfig = {
-  unknown_person:      { icon: AlertTriangle, color: 'text-red-600',   bg: 'bg-red-50',   border: 'border-red-200',   label: 'Unknown Person' },
-  camera_offline:      { icon: WifiOff,       color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-200', label: 'Camera Offline' },
-  ai_offline:          { icon: Cpu,           color: 'text-red-600',   bg: 'bg-red-50',   border: 'border-red-200',   label: 'AI Offline' },
-  report_generated:    { icon: FileText,      color: 'text-blue-600',  bg: 'bg-blue-50',  border: 'border-blue-200',  label: 'Report Ready' },
-  attendance_complete: { icon: CheckCircle,   color: 'text-green-600', bg: 'bg-green-50', border: 'border-green-200', label: 'Attendance Done' },
+  info:    { icon: FileText,      color: 'text-blue-600',  bg: 'bg-blue-50',  border: 'border-blue-200',  label: 'Information' },
+  warning: { icon: AlertTriangle, color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-200', label: 'Warning' },
+  error:   { icon: WifiOff,       color: 'text-red-600',   bg: 'bg-red-50',   border: 'border-red-200',   label: 'Error' },
+  success: { icon: CheckCircle,   color: 'text-green-600', bg: 'bg-green-50', border: 'border-green-200', label: 'Resolved' },
 };
 
 function NotifCard({ n, onRead }: { n: Notification; onRead: () => void }) {
@@ -29,8 +28,9 @@ function NotifCard({ n, onRead }: { n: Notification; onRead: () => void }) {
           <span className={`text-xs font-semibold ${cfg.color}`}>{cfg.label}</span>
           {!n.read && <span className="w-1.5 h-1.5 rounded-full bg-brand-primary flex-shrink-0" />}
         </div>
+        <p className="text-sm font-medium text-brand-textPrimary leading-snug">{n.title}</p>
         <p className="text-sm text-brand-textPrimary leading-snug">{n.message}</p>
-        <p className="text-xs text-brand-textSecondary mt-1">{n.time}</p>
+        <p className="text-xs text-brand-textSecondary mt-1">{n.timestamp}</p>
       </div>
       {!n.read && (
         <button onClick={onRead} className="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white transition-colors text-brand-textSecondary hover:text-brand-primary">

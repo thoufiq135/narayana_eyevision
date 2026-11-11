@@ -1,4 +1,4 @@
-import { attendanceStudents } from './data/attendanceData';
+// import { attendanceStudents } from './data/attendanceData';
 
 export type StudentRecord = {
   name: string;
@@ -16,4 +16,4 @@ export type StudentRecord = {
   }>;
 };
 
-export const attendanceStudents: StudentRecord[] = [ ... ];
+export const attendanceStudents: StudentRecord[] = [  ];

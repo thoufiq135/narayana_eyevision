@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Clock, CheckCircle2, Circle, Loader2, Users, UserX, UserCheck, Search, Camera, ShieldAlert, ShieldCheck, ShieldX, ChevronDown, ChevronUp, Eye, Wifi, Star } from 'lucide-react';
 import { useAppStore } from '../../store';
 import { fetchKnownData, fetchUnknownData } from '../../api/dashboardApi';
+import StudentAttendanceModal from './StudentAttendanceModal';
 import { SkeletonCard } from '../ui/Skeleton';
 
 type MealType = 'breakfast' | 'lunch' | 'dinner';
@@ -365,7 +366,6 @@ function MealDetailPanel({ mealType, hallId, date }: { mealType: MealType; hallI
   const [tab, setTab] = useState<'registered' | 'unknown'>('registered');
   const [search, setSearch] = useState('');
   const [selectedStudent, setSelectedStudent] = useState<DetectedPerson | null>(null);
-
   useEffect(() => {
     if (!hallId || !date) return;
 
@@ -473,6 +473,10 @@ function MealDetailPanel({ mealType, hallId, date }: { mealType: MealType; hallI
           </motion.div>
         )}
       </AnimatePresence>
+      <StudentAttendanceModal
+        studentId={selectedStudent ? selectedStudent.studentId || selectedStudent.id : null}
+        onClose={() => setSelectedStudent(null)}
+      />
     </div>
   );
 }

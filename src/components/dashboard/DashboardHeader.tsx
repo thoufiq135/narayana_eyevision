@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Wifi, WifiOff, Brain, Users, Hash, Building2, MapPin, RefreshCw } from 'lucide-react';
+import { Wifi, WifiOff, Brain, Hash, Building2, MapPin, RefreshCw } from 'lucide-react';
 import { useAppStore } from '../../store';
 import Badge from '../ui/Badge';
 import { useState, useEffect } from 'react';

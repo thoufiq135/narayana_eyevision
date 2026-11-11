@@ -3,7 +3,7 @@ import {
   X, CheckCircle2, XCircle, Clock3, Camera, Star,
   GraduationCap, Hash, BookOpen, Calendar, TrendingUp
 } from 'lucide-react';
-import { StudentAttendanceRecord, MealRecord } from '../../types';
+import { MealRecord } from '../../types';
 import { useStudentAttendance } from '../../api/hooks';
 import { useAppStore } from '../../store';
 

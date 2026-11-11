@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Bell, Menu, X, ChevronDown, Eye, LogOut, Settings, User, 
+  Bell, Menu, X, ChevronDown, LogOut, Settings, User, 
   MapPin, Building2, Layers, ChevronRight, Home 
 } from 'lucide-react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
@@ -19,7 +19,6 @@ export default function Navbar() {
     selectedHall,
     selectedBranch,
     selectedState,
-    clearLocation,
   } = useAppStore();
 
   const [notifOpen, setNotifOpen] = useState(false);

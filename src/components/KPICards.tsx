@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ENDPOINTS } from '../api/config';
-import { dateToISO } from '../lib/dateUtils';
+import { today } from '../api/hooks';
 
 export default function KPICards() {
   const [kpiData, setKpiData] = useState<any[]>([]);
@@ -13,11 +13,11 @@ export default function KPICards() {
         setLoading(true);
         setError(null);
 
-        const today = dateToISO(new Date());
+        const date = today();
 
         // ✅ correct: call the function and use the returned full URL
-        const unknownUrl = ENDPOINTS.DETECTION.UNKNOWN(today);
-        const knownUrl = ENDPOINTS.DETECTION.KNOWN(today);
+        const unknownUrl = ENDPOINTS.DETECTION.UNKNOWN({ date });
+        const knownUrl = ENDPOINTS.DETECTION.KNOWN({ date });
 
         console.log('unknownUrl:', unknownUrl);
         console.log('knownUrl:', knownUrl);

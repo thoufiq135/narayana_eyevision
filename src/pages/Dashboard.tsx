@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {
   LayoutDashboard, Utensils, Video, BarChart3, FileText, 
   Camera, Bell, Home, ArrowLeft, Menu, X, ChevronRight,
-  Activity, Users, Calendar, Settings, LogOut, RefreshCw
+  RefreshCw
 } from 'lucide-react';
 import DashboardHeader from '../components/dashboard/DashboardHeader';
 import KPICards from '../components/dashboard/KPICards';
@@ -199,25 +199,6 @@ export default function Dashboard() {
       console.log(`📍 Navigating to: State=${stateId}, Branch=${branchId}, Hall=${hallId}`);
     }
   }, [params]);
-
-  // Navigation function
-  const navigateToLocation = (type: 'state' | 'branch' | 'hall', id: string) => {
-    const basePath = '/dashboard';
-    let path = basePath;
-
-    if (type === 'state') {
-      path = `${basePath}/state/${id}`;
-    } else if (type === 'branch') {
-      const stateId = selectedState?.id || selectedState?.name || 'unknown';
-      path = `${basePath}/state/${stateId}/branch/${id}`;
-    } else if (type === 'hall') {
-      const stateId = selectedState?.id || selectedState?.name || 'unknown';
-      const branchId = selectedBranch?.id || selectedBranch?.location || 'unknown';
-      path = `${basePath}/state/${stateId}/branch/${branchId}/hall/${id}`;
-    }
-
-    navigate(path);
-  };
 
   // Go back to selection flow
   const goBackToSelection = () => {
