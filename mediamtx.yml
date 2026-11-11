@@ -1,0 +1,32 @@
+# MediaMTX configuration
+# Run with: mediamtx.exe mediamtx.yml
+#
+# Real MediaMTX config keys are flat (rtspAddress, webrtcAddress, etc.) —
+# the previous version nested them under rtsp:/webrtc: as objects
+# (e.g. rtsp: { listenPort: 8554 }), which is not valid MediaMTX syntax
+# and would not actually bind those ports as intended.
+
+rtsp: yes
+rtspAddress: :8554
+
+webrtc: yes
+webrtcAddress: :8889
+
+# Enables GET http://<host>:9997/v3/paths/get/<name> — the quickest way
+# to check whether MediaMTX actually connected to the RTSP camera
+# (look at the "ready" field), without needing a browser at all.
+api: yes
+apiAddress: :9997
+
+# Camera paths. The path name here ("entry_gate") is what the frontend's
+# VITE_CAMERA_GATE_ID must match — see .env.
+paths:
+  entry_gate:
+    source: rtsp://admin:STACKENZO2025@192.168.0.5:554/Streaming/Channels/201?transportmode=unicast
+    sourceOnDemand: false
+    sourceOnDemandStartTimeout: 10s
+    sourceOnDemandCloseAfter: 10s
+    # Hikvision cameras (Streaming/Channels/N01 URL pattern) frequently
+    # need RTSP forced to TCP — VLC negotiates this automatically and
+    # silently, but MediaMTX needs it stated explicitly here.
+    rtspTransport: tcp

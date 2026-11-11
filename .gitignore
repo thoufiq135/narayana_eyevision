@@ -1,0 +1,55 @@
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# MediaMTX
+mediamtx.exe
+mediamtx.zip
+mediamtx/
+*.db
+
+# Camera credentials and configuration
+mediamtx.local.yml
+camera-config.local.*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Operating system
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Temporary files
+tmp/
+temp/
+.cache/
+
+# Coverage
+coverage/
+
+# Python (if used)
+__pycache__/
+*.py[cod]
+venv/
+.venv/

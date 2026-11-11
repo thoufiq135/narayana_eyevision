@@ -1,0 +1,23 @@
+{
+  "name": "canteen-watch-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Canteen employee/visitor monitoring dashboard.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.7.0",
+    "react-router-dom": "^6.28.0",
+    "recharts": "^3.10.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^5.4.10"
+  }
+}
